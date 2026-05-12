@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Story 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #c0506a;
+    --blush: #f7dde5;
+    --cream: #fdf6f0;
+    --deep: #3a1a24;
+    --gold: #c9965a;
+    --petal1: #f2a5bb;
+    --petal2: #e87fa1;
+    --petal3: #d4567a;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--deep);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── PETALS ── */
+  .petals-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .petal {
+    position: absolute;
+    top: -60px;
+    width: 18px; height: 22px;
+    border-radius: 50% 0 50% 0;
+    opacity: 0.7;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0.8; }
+    50%  { transform: translateY(50vh) rotate(180deg) translateX(40px); opacity: 0.6; }
+    100% { transform: translateY(105vh) rotate(360deg) translateX(-20px); opacity: 0; }
+  }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: radial-gradient(ellipse at 50% 60%, #ffe8ef 0%, var(--cream) 70%);
+  }
+  .heart-ring {
+    width: 160px; height: 160px;
+    border: 3px solid var(--petal1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem;
+    animation: pulse-ring 2.8s ease-in-out infinite;
+    position: relative;
+  }
+  .heart-ring::before {
+    content: '';
+    position: absolute;
+    width: 180px; height: 180px;
+    border: 1px solid var(--petal1);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: pulse-ring 2.8s ease-in-out 0.4s infinite;
+  }
+  @keyframes pulse-ring {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+  .hero-heart {
+    font-size: 4.5rem;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.15); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.1); }
+    56% { transform: scale(1); }
+  }
+  .badge {
+    display: inline-block;
+    background: var(--rose);
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    margin-bottom: 1.2rem;
+    animation: fadeDown 1s ease 0.2s both;
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 8vw, 5.5rem);
+    line-height: 1.1;
+    color: var(--rose);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    color: var(--gold);
+    margin-bottom: 1.6rem;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+  .hero-message {
+    max-width: 520px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #7a4050;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── COUNTER ── */
+  .counter-strip {
+    position: relative; z-index: 1;
+    background: var(--rose);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .counter-label {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .counter-numbers {
+    display: flex; justify-content: center; gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .counter-unit {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .counter-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #fff;
+    line-height: 1;
+  }
+  .counter-name {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  /* ── SECTION HEADERS ── */
+  section {
+    position: relative; z-index: 1;
+    padding: 5rem 1.5rem;
+  }
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .section-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--rose);
+    line-height: 1.2;
+  }
+
+  /* ── GALLERY ── */
+  #gallery { background: #fff; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .photo-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    background: var(--blush);
+    cursor: pointer;
+    transform: translateY(30px);
+    opacity: 0;
+    transition: transform 0.5s ease, box-shadow 0.3s;
+  }
+  .photo-card.visible {
+    animation: riseIn 0.6s ease forwards;
+  }
+  @keyframes riseIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .photo-card img, .photo-card video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .photo-card:hover img,
+  .photo-card:hover video { transform: scale(1.05); }
+  .photo-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(58,26,36,0.8));
+    color: #fff;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    padding: 2rem 1rem 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .photo-card:hover .photo-caption { opacity: 1; }
+  .video-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(192,80,106,0.85);
+    color: #fff;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  /* placeholder cards */
+  .photo-placeholder {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem;
+    color: var(--petal2);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    border: 2px dashed var(--petal1);
+    font-size: 0.9rem;
+  }
+  .photo-placeholder span { font-size: 2.5rem; }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    z-index: 999;
+    background: rgba(30,5,15,0.92);
+    align-items: center; justify-content: center;
+  }
+  #lightbox.open { display: flex; }
+  #lightbox img, #lightbox video {
+    max-width: 90vw; max-height: 88vh;
+    border-radius: 12px;
+    box-shadow: 0 8px 60px rgba(0,0,0,0.5);
+  }
+  #lightbox-close {
+    position: absolute; top: 1.2rem; right: 1.5rem;
+    color: #fff; font-size: 2rem;
+    cursor: pointer; background: none; border: none;
+    line-height: 1;
+  }
+
+  /* ── LETTER ── */
+  #letter { background: var(--blush); }
+  .letter-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    padding: clamp(2rem, 6vw, 4rem);
+    box-shadow: 0 4px 40px rgba(192,80,106,0.1);
+    position: relative;
+  }
+  .letter-wrap::before {
+    content: '❝';
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: var(--blush);
+    position: absolute;
+    top: -1.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .letter-body {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.9;
+    color: #5a2d3a;
+    position: relative;
+    z-index: 1;
+  }
+  .letter-sign {
+    margin-top: 2rem;
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--rose);
+  }
+
+  /* ── TIMELINE ── */
+  #timeline { background: #fff; }
+  .timeline-list {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .timeline-list::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--blush);
+    transform: translateX(-50%);
+  }
+  .timeline-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+  }
+  .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+  .timeline-dot {
+    flex: 0 0 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--rose);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    align-self: flex-start;
+    position: relative;
+    z-index: 1;
+    margin-top: 0.2rem;
+    box-shadow: 0 0 0 6px var(--blush);
+  }
+  .timeline-content {
+    flex: 1;
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--blush);
+  }
+  .timeline-date {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .timeline-event {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--deep);
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: var(--deep);
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+  }
+  footer .footer-hearts {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+
+  /* ── FLOATING HEARTS ── */
+  .float-heart {
+    position: fixed;
+    pointer-events: none;
+    z-index: 5000;
+    font-size: 1.6rem;
+    animation: floatUp 1.2s ease forwards;
+  }
+  @keyframes floatUp {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
+  }
+
+  @media (max-width: 580px) {
+    .timeline-list::before { left: 22px; }
+    .timeline-item, .timeline-item:nth-child(even) { flex-direction: column; }
+    .timeline-dot { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div class="petals-canvas" id="petals"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">✕</button>
+  <div id="lightbox-content"></div>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="heart-ring">
+    <div class="hero-heart">💕</div>
+  </div>
+  <span class="badge">Happy Monthsary, My Love</span>
+  <h1 class="hero-title">You & Me</h1>
+  <p class="hero-subtitle">Every day with you is a gift</p>
+
+  <!--
+    ✏️ EDIT: Change the message below to your own words!
+  -->
+  <p class="hero-message">
+    There are moments that change everything — you were mine.
+    Thank you for every laugh, every quiet evening, every adventure.
+    Here's to us, and all the months still to come.
+  </p>
+</section>
+
+<!-- ── COUNTER ── -->
+<div class="counter-strip">
+  <p class="counter-label">Together for</p>
+  <div class="counter-numbers">
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-months">0</span>
+      <span class="counter-name">Months</span>
+    </div>
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-days">0</span>
+      <span class="counter-name">Days</span>
+    </div>
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-hours">0</span>
+      <span class="counter-name">Hours</span>
+    </div>
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-minutes">0</span>
+      <span class="counter-name">Minutes</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── GALLERY ── -->
+<section id="gallery">
+  <div class="section-header">
+    <span class="section-tag">Our Memories</span>
+    <h2 class="section-title">A Little Collection of Us</h2>
+  </div>
+
+  <!--
+    ✏️ HOW TO ADD PHOTOS / VIDEOS:
+    1. Upload your image or video file next to index.html on GitHub.
+    2. Replace "photos/photo1.jpg" with your actual filename.
+    3. The caption="..." text appears on hover.
+    4. For videos, use the VIDEO card template.
+    5. Delete the placeholder cards when you have real photos.
+
+    PHOTO CARD TEMPLATE:
+    <div class="photo-card">
+      <img src="photos/your-photo.jpg" alt="description" loading="lazy" />
+      <div class="photo-caption">Your caption here</div>
+    </div>
+
+    VIDEO CARD TEMPLATE:
+    <div class="photo-card">
+      <video src="videos/your-video.mp4" muted loop playsinline></video>
+      <span class="video-badge">▶ Video</span>
+      <div class="photo-caption">Your caption here</div>
+    </div>
+  -->
+  <div class="gallery-grid" id="gallery-grid">
+
+    <!-- PLACEHOLDER CARDS — replace these with your real photos! -->
+    <div class="photo-card photo-placeholder">
+      <span>📸</span>
+      Add your photo here
+    </div>
+    <div class="photo-card photo-placeholder">
+      <span>💑</span>
+      Add your photo here
+    </div>
+    <div class="photo-card photo-placeholder">
+      <span>🌸</span>
+      Add your photo here
+    </div>
+    <div class="photo-card photo-placeholder">
+      <span>🎥</span>
+      Add your video here
+    </div>
+    <div class="photo-card photo-placeholder">
+      <span>📷</span>
+      Add your photo here
+    </div>
+    <div class="photo-card photo-placeholder">
+      <span>💕</span>
+      Add your photo here
+    </div>
+
+  </div>
+</section>
+
+<!-- ── LOVE LETTER ── -->
+<section id="letter">
+  <div class="section-header">
+    <span class="section-tag">From My Heart</span>
+    <h2 class="section-title">A Letter to You</h2>
+  </div>
+  <div class="letter-wrap">
+    <!--
+      ✏️ EDIT: Replace this letter with your own words!
+    -->
+    <p class="letter-body">
+      My love,<br><br>
+      I never thought I could feel this at home with another person. But here you are —
+      in all your wonderful, imperfect, beautiful ways — and I am endlessly grateful.
+      <br><br>
+      Every moment we share becomes a memory I hold close. The quiet ones, the silly ones,
+      the ones where we said nothing at all and it was still perfect.
+      <br><br>
+      You make ordinary days feel like something worth celebrating.
+      And I want to celebrate every single one of them — with you.
+    </p>
+    <p class="letter-sign">
+      <!--
+        ✏️ EDIT: Change "Your Name" to your actual name
+      -->
+      Always yours, <em>Your Name</em> 💕
+    </p>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section id="timeline">
+  <div class="section-header">
+    <span class="section-tag">Our Journey</span>
+    <h2 class="section-title">Moments That Matter</h2>
+  </div>
+
+  <!--
+    ✏️ HOW TO EDIT THE TIMELINE:
+    Change the date, emoji, and description for each event.
+    Add more <div class="timeline-item"> blocks to add more milestones.
+  -->
+  <div class="timeline-list" id="timeline-list">
+
+    <div class="timeline-item">
+      <div class="timeline-dot">💌</div>
+      <div class="timeline-content">
+        <div class="timeline-date">January 1, 2025</div> <!-- ✏️ Change date -->
+        <div class="timeline-event">The day we first said hello. Everything changed.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">☕</div>
+      <div class="timeline-content">
+        <div class="timeline-date">February 14, 2025</div> <!-- ✏️ Change date -->
+        <div class="timeline-event">Our first date. I was nervous. You were perfect.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">🌅</div>
+      <div class="timeline-content">
+        <div class="timeline-date">March 20, 2025</div> <!-- ✏️ Change date -->
+        <div class="timeline-event">The road trip we almost didn't take. Best decision ever.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">🎂</div>
+      <div class="timeline-content">
+        <div class="timeline-date">May 12, 2025</div> <!-- ✏️ Change date -->
+        <div class="timeline-event">Your birthday. I tried to bake. You laughed. It was wonderful.</div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">🌙</div>
+      <div class="timeline-content">
+        <div class="timeline-date">Today</div>
+        <div class="timeline-event">Another month together. Here's to many, many more. 💕</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="footer-hearts">💕</span>
+  Made with love, just for you.
+  <br><br>
+  <!--
+    ✏️ EDIT: Change the names below
+  -->
+  <strong style="color:rgba(255,255,255,0.8)">Your Name & Their Name</strong>
+</footer>
+
+<script>
+// ── PETALS ──────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('petals');
+  const colors = ['#f2a5bb','#e87fa1','#f7dde5','#d4567a','#fcd5e0'];
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      width: ${12 + Math.random() * 14}px;
+      height: ${15 + Math.random() * 14}px;
+      animation-duration: ${5 + Math.random() * 8}s;
+      animation-delay: ${Math.random() * 8}s;
+      border-radius: ${Math.random() > 0.5 ? '50% 0 50% 0' : '0 50% 0 50%'};
+      transform: rotate(${Math.random() * 360}deg);
+    `;
+    canvas.appendChild(p);
+  }
+})();
+
+// ── COUNTER ─────────────────────────────────────────────
+(function() {
+  // ✏️ EDIT: Change this to your actual relationship start date!
+  // Format: new Date('YYYY-MM-DD')
+  const start = new Date('2025-01-01');
+
+  function update() {
+    const now = new Date();
+    const diff = now - start;
+    if (diff < 0) return;
+
+    const totalDays   = Math.floor(diff / 864e5);
+    const totalHours  = Math.floor(diff / 36e5);
+    const totalMins   = Math.floor(diff / 6e4);
+    const months      = Math.floor(totalDays / 30);
+    const days        = totalDays % 30;
+    const hours       = Math.floor((diff % 864e5) / 36e5);
+    const minutes     = Math.floor((diff % 36e5) / 6e4);
+
+    document.getElementById('cnt-months').textContent  = months;
+    document.getElementById('cnt-days').textContent    = days;
+    document.getElementById('cnt-hours').textContent   = hours;
+    document.getElementById('cnt-minutes').textContent = minutes;
+  }
+  update();
+  setInterval(update, 10000);
+})();
+
+// ── GALLERY SCROLL REVEAL ────────────────────────────────
+(function() {
+  const cards = document.querySelectorAll('.photo-card');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(c => observer.observe(c));
+})();
+
+// ── VIDEO AUTOPLAY ON HOVER ──────────────────────────────
+document.querySelectorAll('.photo-card video').forEach(v => {
+  const card = v.closest('.photo-card');
+  card.addEventListener('mouseenter', () => v.play());
+  card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+});
+
+// ── LIGHTBOX ────────────────────────────────────────────
+const lb = document.getElementById('lightbox');
+const lbc = document.getElementById('lightbox-content');
+document.querySelectorAll('.photo-card:not(.photo-placeholder)').forEach(card => {
+  card.addEventListener('click', () => {
+    const img = card.querySelector('img');
+    const vid = card.querySelector('video');
+    lbc.innerHTML = '';
+    if (img) {
+      const el = document.createElement('img');
+      el.src = img.src; el.alt = img.alt;
+      lbc.appendChild(el);
+    } else if (vid) {
+      const el = document.createElement('video');
+      el.src = vid.src; el.controls = true; el.autoplay = true;
+      lbc.appendChild(el);
+    }
+    lb.classList.add('open');
+  });
+});
+document.getElementById('lightbox-close').addEventListener('click', () => {
+  lb.classList.remove('open');
+  lbc.innerHTML = '';
+});
+lb.addEventListener('click', e => {
+  if (e.target === lb) { lb.classList.remove('open'); lbc.innerHTML = ''; }
+});
+
+// ── FLOATING HEARTS ON CLICK ─────────────────────────────
+document.addEventListener('click', e => {
+  const emojis = ['💕','💗','💖','🌸','✨','💓'];
+  const h = document.createElement('div');
+  h.className = 'float-heart';
+  h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  h.style.left = (e.clientX - 12) + 'px';
+  h.style.top  = (e.clientY - 12) + 'px';
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 1300);
+});
+</script>
+</body>
+</html>
