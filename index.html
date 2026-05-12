@@ -139,7 +139,7 @@
   }
 
   /* ── COUNTER ── */
-  .counter-strip {
+ /* .counter-strip {
     position: relative; z-index: 1;
     background: var(--rose);
     padding: 2rem 1.5rem;
@@ -171,7 +171,95 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-top: 0.25rem;
+  }*/
+
+ <!-- ── COUNTER ── -->
+<div class="counter-strip">
+  <p class="counter-label">Together for</p>
+
+  <div class="counter-numbers">
+
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-months">74</span>
+      <span class="counter-name">Months</span>
+    </div>
+
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-days">27</span>
+      <span class="counter-name">Days</span>
+    </div>
+
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-hours">0</span>
+      <span class="counter-name">Hours</span>
+    </div>
+
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-minutes">0</span>
+      <span class="counter-name">Minutes</span>
+    </div>
+
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-seconds">0</span>
+      <span class="counter-name">Seconds</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Starting values
+  let months = 74;
+  let days = 27;
+  let hours = new Date().getHours();
+  let minutes = new Date().getMinutes();
+  let seconds = new Date().getSeconds();
+
+  // Elements
+  const monthsEl = document.getElementById("cnt-months");
+  const daysEl = document.getElementById("cnt-days");
+  const hoursEl = document.getElementById("cnt-hours");
+  const minutesEl = document.getElementById("cnt-minutes");
+  const secondsEl = document.getElementById("cnt-seconds");
+
+  function updateCounter() {
+    seconds++;
+
+    if (seconds >= 60) {
+      seconds = 0;
+      minutes++;
+    }
+
+    if (minutes >= 60) {
+      minutes = 0;
+      hours++;
+    }
+
+    if (hours >= 24) {
+      hours = 0;
+      days++;
+    }
+
+    // Approximate month rollover every 30 days
+    if (days >= 30) {
+      days = 0;
+      months++;
+    }
+
+    // Update UI
+    monthsEl.textContent = months;
+    daysEl.textContent = days;
+    hoursEl.textContent = hours;
+    minutesEl.textContent = minutes;
+    secondsEl.textContent = seconds;
   }
+
+  // Initial render
+  updateCounter();
+
+  // Run every second
+  setInterval(updateCounter, 1000);
+</script>
 
   /* ── SECTION HEADERS ── */
   section {
