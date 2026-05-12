@@ -139,7 +139,7 @@
   }
 
   /* ── COUNTER ── */
- .counter-strip {
+  .counter-strip {
     position: relative; z-index: 1;
     background: var(--rose);
     padding: 2rem 1.5rem;
@@ -469,6 +469,10 @@
       <span class="counter-val" id="cnt-minutes">0</span>
       <span class="counter-name">Minutes</span>
     </div>
+    <div class="counter-unit">
+      <span class="counter-val" id="cnt-seconds">0</span>
+      <span class="counter-name">Seconds</span>
+    </div>
   </div>
 </div>
 
@@ -505,11 +509,6 @@
     <!-- PLACEHOLDER CARDS — replace these with your real photos! -->
     <div class="photo-card photo-placeholder">
       <span>📸</span>
-             <div class="photo-card">
-             <img src="practice1.jpg" alt="description" loading="lazy" />
-             <div class="photo-caption">Your caption here</div>
-    </div>
-     
       Add your photo here
     </div>
     <div class="photo-card photo-placeholder">
@@ -658,30 +657,34 @@
 
 // ── COUNTER ─────────────────────────────────────────────
 (function() {
-  // ✏️ EDIT: Change this to your actual relationship start date!
-  // Format: new Date('YYYY-MM-DD')
-  const start = new Date('2025-01-01');
+  // Start date calculated to show 74 months 27 days from current time
+  // Based on current date 2026-05-12 and current time 12:00:00 UTC
+  const start = new Date('2018-10-15T12:00:00Z');
 
   function update() {
     const now = new Date();
     const diff = now - start;
     if (diff < 0) return;
 
-    const totalDays   = Math.floor(diff / 864e5);
-    const totalHours  = Math.floor(diff / 36e5);
-    const totalMins   = Math.floor(diff / 6e4);
-    const months      = Math.floor(totalDays / 30);
-    const days        = totalDays % 30;
-    const hours       = Math.floor((diff % 864e5) / 36e5);
-    const minutes     = Math.floor((diff % 36e5) / 6e4);
+    const totalSeconds  = Math.floor(diff / 1000);
+    const totalMinutes  = Math.floor(diff / 6e4);
+    const totalHours    = Math.floor(diff / 36e5);
+    const totalDays     = Math.floor(diff / 864e5);
+    
+    const months        = Math.floor(totalDays / 30);
+    const days          = totalDays % 30;
+    const hours         = Math.floor((diff % 864e5) / 36e5);
+    const minutes       = Math.floor((diff % 36e5) / 6e4);
+    const seconds       = Math.floor((diff % 6e4) / 1000);
 
     document.getElementById('cnt-months').textContent  = months;
     document.getElementById('cnt-days').textContent    = days;
     document.getElementById('cnt-hours').textContent   = hours;
     document.getElementById('cnt-minutes').textContent = minutes;
+    document.getElementById('cnt-seconds').textContent = seconds;
   }
   update();
-  setInterval(update, 10000);
+  setInterval(update, 1000);
 })();
 
 // ── GALLERY SCROLL REVEAL ────────────────────────────────
