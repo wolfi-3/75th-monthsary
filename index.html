@@ -325,63 +325,7 @@
     color: var(--rose);
   }
 
-  /* ── TIMELINE ── */
-  #timeline { background: #fff; }
-  .timeline-list {
-    max-width: 700px;
-    margin: 0 auto;
-    position: relative;
-  }
-  .timeline-list::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0; bottom: 0;
-    width: 2px;
-    background: var(--blush);
-    transform: translateX(-50%);
-  }
-  .timeline-item {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-    position: relative;
-  }
-  .timeline-item:nth-child(even) { flex-direction: row-reverse; }
-  .timeline-dot {
-    flex: 0 0 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--rose);
-    color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem;
-    align-self: flex-start;
-    position: relative;
-    z-index: 1;
-    margin-top: 0.2rem;
-    box-shadow: 0 0 0 6px var(--blush);
-  }
-  .timeline-content {
-    flex: 1;
-    background: var(--cream);
-    border-radius: 14px;
-    padding: 1.2rem 1.4rem;
-    border: 1px solid var(--blush);
-  }
-  .timeline-date {
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-  .timeline-event {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    color: var(--deep);
-    line-height: 1.5;
-  }
+ 
 
   /* ── FOOTER ── */
   footer {
@@ -612,62 +556,6 @@
 </section>
 
 
-<!-- ── TIMELINE ── -->
-<section id="timeline">
-  <div class="section-header">
-    <span class="section-tag">Our Journey</span>
-    <h2 class="section-title">Moments That Matter</h2>
-  </div>
-
-  <!--
-    ✏️ HOW TO EDIT THE TIMELINE:
-    Change the date, emoji, and description for each event.
-    Add more <div class="timeline-item"> blocks to add more milestones.
-  -->
-  <div class="timeline-list" id="timeline-list">
-
-    <div class="timeline-item">
-      <div class="timeline-dot">💌</div>
-      <div class="timeline-content">
-        <div class="timeline-date">January 1, 2025</div> <!-- ✏️ Change date -->
-        <div class="timeline-event">The day we first said hello. Everything changed.</div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot">☕</div>
-      <div class="timeline-content">
-        <div class="timeline-date">February 14, 2025</div> <!-- ✏️ Change date -->
-        <div class="timeline-event">Our first date. I was nervous. You were perfect.</div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot">🌅</div>
-      <div class="timeline-content">
-        <div class="timeline-date">March 20, 2025</div> <!-- ✏️ Change date -->
-        <div class="timeline-event">The road trip we almost didn't take. Best decision ever.</div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot">🎂</div>
-      <div class="timeline-content">
-        <div class="timeline-date">May 12, 2025</div> <!-- ✏️ Change date -->
-        <div class="timeline-event">Your birthday. I tried to bake. You laughed. It was wonderful.</div>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot">🌙</div>
-      <div class="timeline-content">
-        <div class="timeline-date">Today</div>
-        <div class="timeline-event">Another month together. Here's to many, many more. 💕</div>
-      </div>
-    </div>
-
-  </div>
-</section>
 
 <!-- ── FOOTER ── -->
 <footer>
