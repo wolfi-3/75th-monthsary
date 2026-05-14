@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Letter For You 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #c0506a;
+  --blush: #f7dde5;
+  --cream: #fdf6f0;
+  --deep: #3a1a24;
+  --gold: #c9965a;
+  --petal1: #f2a5bb;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #1a0810;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ── STARFIELD ── */
+.stars {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+/* ── PETALS ── */
+.petal {
+  position: fixed;
+  top: -60px;
+  border-radius: 50% 0 50% 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  animation: petalFall linear infinite;
+}
+@keyframes petalFall {
+  0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(105vh) rotate(400deg) translateX(60px); opacity: 0; }
+}
+
+/* ── SCENE WRAPPER ── */
+#scene {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10;
+}
+
+/* ── HINT TEXT ── */
+#hint {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: rgba(247,221,229,0.55);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.08em;
+  animation: hintPulse 2.5s ease-in-out infinite;
+  transition: opacity 0.6s;
+}
+@keyframes hintPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ── ENVELOPE ── */
+#envelope-wrap {
+  position: relative;
+  width: clamp(260px, 55vw, 420px);
+  cursor: pointer;
+  user-select: none;
+  filter: drop-shadow(0 12px 48px rgba(192,80,106,0.35));
+  transition: filter 0.3s;
+}
+#envelope-wrap:hover {
+  filter: drop-shadow(0 16px 64px rgba(192,80,106,0.55));
+}
+
+.env-body {
+  position: relative;
+  width: 100%;
+  padding-top: 66%;  /* 3:2 ratio */
+  background: #f0c4d0;
+  border-radius: 6px 6px 12px 12px;
+  overflow: hidden;
+}
+
+/* bottom triangle flaps */
+.env-body::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  border-left: 50.1% solid transparent;
+  border-right: 50.1% solid transparent;
+  border-bottom: 48% solid #e8a8bc;
+  z-index: 1;
+}
+/* V fold lines */
+.env-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 100%;
+  background:
+    linear-gradient(135deg, transparent 49.5%, #d4899e 49.5%, #d4899e 50.5%, transparent 50.5%),
+    linear-gradient(225deg, transparent 49.5%, #d4899e 49.5%, #d4899e 50.5%, transparent 50.5%);
+  z-index: 2;
+}
+
+/* ── FLAP (top lid) ── */
+.env-flap {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 52%;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  z-index: 20;
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.env-flap-front {
+  position: absolute;
+  inset: 0;
+  background: #f0c4d0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  backface-visibility: hidden;
+}
+.env-flap-inner {
+  position: absolute;
+  inset: 0;
+  background: #e8a8bc;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform: rotateX(180deg);
+  backface-visibility: hidden;
+}
+
+/* seal */
+.env-seal {
+  position: absolute;
+  top: 42%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px; height: 48px;
+  background: var(--rose);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  z-index: 25;
+  box-shadow: 0 2px 16px rgba(192,80,106,0.5);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* open state */
+#envelope-wrap.open .env-flap {
+  transform: perspective(600px) rotateX(-180deg);
+}
+#envelope-wrap.open .env-seal {
+  opacity: 0; transform: translate(-50%, -50%) scale(0.5);
+}
+
+/* ── LETTER CARD ── */
+.env-letter {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  width: 80%;
+  background: #fff8f5;
+  border-radius: 8px;
+  padding: 1rem;
+  z-index: 5;
+  box-shadow: 0 4px 24px rgba(58,26,36,0.15);
+  text-align: center;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+.env-letter .letter-hearts {
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 0.3rem;
+}
+.env-letter p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: #9a4a5a;
+  line-height: 1.5;
+}
+#envelope-wrap.open .env-letter {
+  transform: translateX(-50%) translateY(-90%);
+}
+
+/* ── SHIMMER ON HOVER ── */
+#envelope-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+  background-size: 200% 100%;
+  border-radius: 6px 6px 12px 12px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  animation: shimmer 2.4s ease-in-out infinite;
+  z-index: 30;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { background-position: -200% 0; opacity: 0; }
+}
+
+/* ── CLICK RIPPLE ── */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid var(--petal1);
+  pointer-events: none;
+  z-index: 9999;
+  animation: rippleOut 0.8s ease forwards;
+}
+@keyframes rippleOut {
+  0%   { width: 0; height: 0; opacity: 1; }
+  100% { width: 180px; height: 180px; opacity: 0; }
+}
+
+/* ── OVERLAY TRANSITION ── */
+#overlay {
+  position: fixed; inset: 0;
+  z-index: 9000;
+  background: #fdf6f0;
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 1s cubic-bezier(0.77, 0, 0.18, 1);
+  pointer-events: none;
+}
+#overlay.reveal {
+  clip-path: circle(150% at 50% 50%);
+}
+
+/* ── FLOATING CLICK HEARTS ── */
+.float-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5000;
+  font-size: 1.6rem;
+  animation: floatUp 1.2s ease forwards;
+}
+@keyframes floatUp {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-100px) scale(0.4); }
+}
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div id="overlay"></div>
+
+<div id="scene">
+  <p id="hint">✉ A letter arrived for you…</p>
+
+  <div id="envelope-wrap">
+    <!-- Flap -->
+    <div class="env-flap">
+      <div class="env-flap-front"></div>
+      <div class="env-flap-inner"></div>
+    </div>
+    <!-- Seal -->
+    <div class="env-seal">💌</div>
+    <!-- Body -->
+    <div class="env-body">
+      <!-- Letter peeking out -->
+      <div class="env-letter">
+        <div class="letter-hearts">💕 💗 💕</div>
+        <!--
+          ✏️ EDIT: Change this text inside the envelope
+        -->
+        <p>Open me, my love…</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STARS ────────────────────────────────────────────────
+(function(){
+  const s = document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const el = document.createElement('div');
+    el.className = 'star';
+    const sz = 1 + Math.random()*2;
+    el.style.cssText=`
+      width:${sz}px;height:${sz}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      animation-duration:${2+Math.random()*4}s;
+      animation-delay:${Math.random()*4}s;
+    `;
+    s.appendChild(el);
+  }
+})();
+
+// ── PETALS ───────────────────────────────────────────────
+(function(){
+  const colors=['#f2a5bb','#e87fa1','#f7dde5','#fcd5e0'];
+  for(let i=0;i<14;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    const sz=10+Math.random()*12;
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      width:${sz}px;height:${sz+4}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${7+Math.random()*9}s;
+      animation-delay:${Math.random()*10}s;
+      border-radius:${Math.random()>.5?'50% 0 50% 0':'0 50% 0 50%'};
+    `;
+    document.body.appendChild(p);
+  }
+})();
+
+// ── ENVELOPE CLICK ──────────────────────────────────────
+const wrap = document.getElementById('envelope-wrap');
+const hint = document.getElementById('hint');
+const overlay = document.getElementById('overlay');
+let opened = false;
+let animating = false;
+
+wrap.addEventListener('click', function(e) {
+  if (animating) return;
+
+  // floating hearts
+  const emojis=['💕','💗','💖','🌸','✨'];
+  for(let i=0;i<4;i++){
+    setTimeout(()=>{
+      const h=document.createElement('div');
+      h.className='float-heart';
+      h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      h.style.left=(e.clientX-12+Math.random()*40-20)+'px';
+      h.style.top=(e.clientY-12)+'px';
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),1300);
+    }, i*120);
+  }
+
+  if (!opened) {
+    // Step 1: open flap
+    animating = true;
+    wrap.classList.add('open');
+    hint.style.opacity = '0';
+
+    // Step 2: after flap opens, wait then trigger page transition
+    setTimeout(() => {
+      overlay.classList.add('reveal');
+    }, 1400);
+
+    // Step 3: redirect after transition
+    setTimeout(() => {
+      // ✏️ EDIT: Change 'index.html' if your main page has a different filename
+      window.location.href = 'index.html';
+    }, 2400);
+
+    opened = true;
+  }
+});
+
+// Global floating hearts on any click
+document.addEventListener('click', e => {
+  if(e.target.closest('#envelope-wrap')) return; // already handled
+  const emojis=['💕','🌸','✨','💗'];
+  const h=document.createElement('div');
+  h.className='float-heart';
+  h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  h.style.left=(e.clientX-12)+'px';
+  h.style.top=(e.clientY-12)+'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),1300);
+});
+</script>
+</body>
+</html>
